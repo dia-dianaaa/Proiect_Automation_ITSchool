@@ -9,16 +9,21 @@ public class ChromeServiceBrowser implements IBrowserService {
 
     @Override
     public void openBrowser() {
-        ChromeOptions options = (ChromeOptions) browserOptions(); //ce e in paranteza este un cast
+        ChromeOptions options = (ChromeOptions) browserOptions();
         driver = new ChromeDriver(options);
     }
 
     @Override
     public Object browserOptions() {
         ChromeOptions options = new ChromeOptions();
-
         options.addArguments("start-maximized");
         options.addArguments("no-sandbox");
+
+        String ciCd = System.getProperty("ci_cd");
+        if (Boolean.parseBoolean(ciCd)) {
+            options.addArguments("--headless=new");
+        }
+
         return options;
     }
 

@@ -33,7 +33,12 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+### Cursor ###
+.cursor/
 
 ### Mac OS ###
 .DS_Store

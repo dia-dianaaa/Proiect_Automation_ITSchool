@@ -5,10 +5,12 @@ import org.openqa.selenium.WebDriver;
 public class BrowserFactory {
 
     public WebDriver getBrowserFactory() {
+        String browser = System.getProperty("browser");
+        if (browser == null || browser.isBlank()) {
+            browser = BrowserType.BROWSER_CHROME;
+        }
 
-        String browser = System.getProperty("browser"); //cand ruleaza programul isi ia anumite proprietati - se ia din pomxml
-
-        switch(browser){
+        switch (browser) {
             case BrowserType.BROWSER_CHROME:
                 ChromeServiceBrowser chromeServiceBrowser = new ChromeServiceBrowser();
                 chromeServiceBrowser.openBrowser();
@@ -19,7 +21,8 @@ public class BrowserFactory {
                 edgeServiceBrowser.openBrowser();
                 System.out.println("Acum ruleaza pe " + browser);
                 return edgeServiceBrowser.getDriver();
+            default:
+                throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
-        return null;
     }
 }

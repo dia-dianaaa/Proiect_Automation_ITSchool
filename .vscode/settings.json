@@ -1,0 +1,17 @@
+{
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.jdt.ls.java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-26.0.2.101-hotspot",
+  "java.import.maven.enabled": true,
+  "maven.terminal.customEnv": [
+    {
+      "environmentVariable": "JAVA_HOME",
+      "value": "C:\\Program Files\\Eclipse Adoptium\\jdk-26.0.2.101-hotspot"
+    }
+  ],
+  "java.test.config": {
+    "vmArgs": [
+      "-Dbrowser=chrome",
+      "-Dci_cd=false"
+    ]
+  }
+}

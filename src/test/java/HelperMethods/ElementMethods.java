@@ -1,10 +1,14 @@
 package HelperMethods;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.List;
 
@@ -27,9 +31,9 @@ public class ElementMethods {
     }
 
     public void selectElementFromListByText(List<WebElement> listWebElement, String text) {
-        for (int i = 0; i < listWebElement.size(); i++) {
-            if (listWebElement.get(i).getText().equals(text)) {
-                clickOnElement(listWebElement.get(i));
+        for (WebElement webElement : listWebElement) {
+            if (webElement.getText().equals(text)) {
+                clickOnElement(webElement);
                 break;
             }
         }
@@ -39,5 +43,44 @@ public class ElementMethods {
         waitVisibility(element);
         element.clear();
         element.sendKeys(text);
+    }
+
+    public void enterTextWithEnter(WebElement element, String text) {
+        waitVisibility(element);
+        element.clear();
+        element.sendKeys(text);
+        element.sendKeys(Keys.ENTER);
+    }
+
+    public void uploadPicture(WebElement element, String resourcePath) {
+        File photo = new File(resourcePath);
+        element.sendKeys(photo.getAbsolutePath());
+    }
+
+    public void enterTextUsingActions(WebElement element, String text) {
+        Actions actions = new Actions(driver);
+        waitVisibility(element);
+        actions.sendKeys(text).perform();
+        actions.sendKeys(Keys.ENTER).perform();
+    }
+
+    public void clickMultipleValues(List<WebElement> webElements, List<String> values) {
+        for (String value : values) {
+            for (WebElement webElement : webElements) {
+                if (webElement.getText().equals(value)) {
+                    webElement.click();
+                }
+            }
+        }
+    }
+
+    public void selectByText(WebElement element, String text) {
+        Select dropDown = new Select(element);
+        dropDown.selectByVisibleText(text);
+    }
+
+    public void selectByValue(WebElement element, String value) {
+        Select dropDown = new Select(element);
+        dropDown.selectByValue(value);
     }
 }

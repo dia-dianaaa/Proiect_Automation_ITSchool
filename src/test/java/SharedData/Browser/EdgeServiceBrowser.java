@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 
-public class EdgeServiceBrowser implements IBrowserService{
+public class EdgeServiceBrowser implements IBrowserService {
     private WebDriver driver;
 
     @Override
@@ -19,6 +19,12 @@ public class EdgeServiceBrowser implements IBrowserService{
         options.addArguments("--disable-gpu");
         options.addArguments("start-maximized");
         options.addArguments("no-sandbox");
+
+        String ciCd = System.getProperty("ci_cd");
+        if (Boolean.parseBoolean(ciCd)) {
+            options.addArguments("--headless=new");
+        }
+
         return options;
     }
 
