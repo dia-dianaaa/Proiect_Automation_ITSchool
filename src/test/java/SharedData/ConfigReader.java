@@ -9,13 +9,28 @@ public final class ConfigReader {
     private static final Properties PROPERTIES = new Properties();
 
     static {
-        try (InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream("config.properties")) {
+        loadRequired("config.properties");
+        loadOptional("config.local.properties");
+    }
+
+    private static void loadRequired(String resourceName) {
+        try (InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream(resourceName)) {
             if (input == null) {
-                throw new IllegalStateException("config.properties not found in classpath");
+                throw new IllegalStateException(resourceName + " not found in classpath");
             }
             PROPERTIES.load(input);
         } catch (IOException e) {
-            throw new IllegalStateException("Failed to load config.properties", e);
+            throw new IllegalStateException("Failed to load " + resourceName, e);
+        }
+    }
+
+    private static void loadOptional(String resourceName) {
+        try (InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream(resourceName)) {
+            if (input != null) {
+                PROPERTIES.load(input);
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to load " + resourceName, e);
         }
     }
 

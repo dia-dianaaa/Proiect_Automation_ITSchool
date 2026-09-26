@@ -1,0 +1,8 @@
+# Copy to config.local.properties for personal overrides (gitignored),
+# or edit config.properties directly. Never commit real passwords.
+
+baseUrl=https://demoqa.com/
+
+db.url=jdbc:mysql://localhost:3306/automation
+db.user=root
+db.password=
